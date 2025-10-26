@@ -1,0 +1,21 @@
+# YouTube SEO Analyzer Requirements
+
+# Core dependencies
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+youtube-transcript-api>=0.6.1
+
+# Natural Language Processing
+nltk>=3.8.1
+scikit-learn>=1.3.0
+
+# Trend Analysis
+pytrends>=4.9.2
+
+# Data handling
+pandas>=2.0.0
+numpy>=1.24.0
+
+# GUI (tkinter comes with Python standard library)
+# No additional GUI packages needed
+
