@@ -278,6 +278,3 @@ For issues, questions, or suggestions:
 ---
 
 **Made with ❤️ for content creators looking to optimize their YouTube presence**
-
-#   Y T _ S E O  
- 
