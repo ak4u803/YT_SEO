@@ -16,6 +16,9 @@ pytrends>=4.9.2
 pandas>=2.0.0
 numpy>=1.24.0
 
+# Scientific computing and statistics (for enhanced trend analysis)
+scipy>=1.11.0
+
 # GUI (tkinter comes with Python standard library)
 # No additional GUI packages needed
 

@@ -18,8 +18,15 @@ An advanced SEO analysis tool designed to scan and analyze YouTube videos, provi
 - **Phrase Detection**: Suggests multi-word tags for better specificity
 - **Smart Filtering**: Removes generic and overused tags
 
-### 📈 Real-Time Trend Analysis
+### 📈 Advanced Trend Prediction & Analysis
 - **Google Trends Integration**: Analyzes current search trends related to your video content
+- **Trend Lifecycle Detection**: Identifies if trends are emerging, growing, peaking, or declining
+- **Velocity & Acceleration Analysis**: Measures how fast trends are rising or falling
+- **Momentum Scoring**: Multi-factor analysis combining growth, velocity, consistency, and level
+- **Trend Forecasting**: Predicts future trend values using exponential smoothing
+- **Viral Detection**: Identifies anomalous spikes indicating viral potential
+- **Seasonality Analysis**: Detects recurring patterns in trend data
+- **Cross-Correlation**: Analyzes relationships between multiple trending keywords
 - **Rising Topics**: Identifies trending topics in your niche
 - **Related Queries**: Suggests tags based on what people are actively searching for
 - **Regional Customization**: Analyze trends for specific geographic regions
@@ -107,10 +114,16 @@ python main.py
 - Actionable improvement tips
 
 #### 📈 Trend Analysis Tab
-- Current trending topics related to your content
+- Current trending topics with comprehensive metrics:
+  - Trend lifecycle phase (emerging, growing, peak, mature, declining)
+  - Velocity and acceleration indicators
+  - Momentum scores and direction
+  - Viral potential alerts
+  - Future trend forecasts with confidence levels
+  - Cross-correlation with related trends
 - Rising search queries
-- Trend-based tag suggestions with explanations
-- Trend momentum indicators
+- Trend-based tag suggestions with detailed explanations
+- Strategic recommendations based on trend analysis
 
 #### 📊 Performance Metrics Tab
 - Overall SEO score with color coding:
@@ -244,14 +257,36 @@ Potential features for future versions:
 - Export reports to PDF/CSV
 - Video upload preview analysis
 
+## Enhanced Trend Prediction Algorithms
+
+The tool now includes sophisticated trend analysis algorithms:
+
+### Key Features:
+1. **Time Series Analysis**: Calculate trend velocity (rate of change) and acceleration
+2. **Lifecycle Detection**: Identify if trends are emerging, growing, at peak, mature, or declining
+3. **Forecasting**: Predict future trend values with confidence levels
+4. **Anomaly Detection**: Spot viral spikes and unusual trend patterns
+5. **Momentum Analysis**: Multi-factor scoring combining multiple trend indicators
+6. **Seasonality Detection**: Identify recurring patterns in trend data
+7. **Cross-Correlation**: Find related trends that move together
+
+### How It Helps:
+- **Emerging Trends**: Get in early before competition increases
+- **Viral Potential**: Identify trends showing explosive growth patterns
+- **Declining Trends**: Avoid keywords losing relevance
+- **Strategic Timing**: Match content releases to trend momentum
+- **Synergy Discovery**: Find related keywords that work well together
+
+For detailed information, see [ENHANCED_TREND_ALGORITHMS.md](ENHANCED_TREND_ALGORITHMS.md)
+
 ## Contributing
 
 Contributions are welcome! Areas for improvement:
-- Enhanced trend prediction algorithms
 - Additional metric calculations
 - UI/UX improvements
 - Performance optimizations
 - Additional language support
+- Machine learning integrations
 
 ## License
 

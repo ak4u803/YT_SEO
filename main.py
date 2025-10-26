@@ -333,19 +333,64 @@ Transcript Summary:
             self.optimization_text.insert(tk.END, f"{i}. {suggestion}\n\n")
             
     def display_trend_results(self, trend_results):
-        """Display trend analysis results"""
-        # Trending topics
+        """Display enhanced trend analysis results"""
+        # Trending topics with detailed metrics
         self.trending_text.delete(1.0, tk.END)
         trending = trend_results.get('trending_topics', [])
-        for i, topic in enumerate(trending, 1):
-            self.trending_text.insert(tk.END, f"{i}. {topic['name']} (Score: {topic['score']})\n")
+        
+        if not trending:
+            self.trending_text.insert(tk.END, "No trending data available.")
+        else:
+            for i, topic in enumerate(trending, 1):
+                # Build detailed display
+                display_text = f"{i}. {topic['name']}\n"
+                display_text += f"   Score: {topic.get('score', 0)} | Status: {topic.get('trend', 'Unknown')}\n"
+                
+                # Add lifecycle info
+                lifecycle = topic.get('lifecycle', 'unknown')
+                lifecycle_desc = topic.get('lifecycle_desc', '')
+                if lifecycle != 'unknown':
+                    display_text += f"   Lifecycle: {lifecycle.upper()}\n"
+                    if lifecycle_desc:
+                        display_text += f"   {lifecycle_desc}\n"
+                
+                # Add momentum info
+                momentum = topic.get('momentum', '')
+                momentum_score = topic.get('momentum_score', 0)
+                if momentum:
+                    display_text += f"   Momentum: {momentum} ({momentum_score}/100)\n"
+                
+                # Add viral indicator
+                if topic.get('viral_indicator'):
+                    display_text += f"   ⚡ {topic.get('viral_indicator')}\n"
+                
+                # Add forecast if available
+                forecasts = topic.get('forecast', [])
+                forecast_conf = topic.get('forecast_confidence', 0)
+                if forecasts:
+                    avg_forecast = sum(forecasts) / len(forecasts)
+                    display_text += f"   Forecast: {avg_forecast:.1f} (confidence: {forecast_conf}%)\n"
+                
+                # Add correlation info
+                correlations = topic.get('correlations', [])
+                if correlations:
+                    corr_keywords = [c['keyword2'] if c['keyword1'] == topic['name'] 
+                                   else c['keyword1'] for c in correlations[:2]]
+                    display_text += f"   Related: {', '.join(corr_keywords)}\n"
+                
+                display_text += "\n"
+                self.trending_text.insert(tk.END, display_text)
         
         # Trend-based suggestions
         self.trend_suggestions_text.delete(1.0, tk.END)
         trend_tags = trend_results.get('trend_tags', [])
-        for i, tag_info in enumerate(trend_tags, 1):
-            self.trend_suggestions_text.insert(tk.END, 
-                f"{i}. {tag_info['tag']} - {tag_info['reason']}\n\n")
+        
+        if not trend_tags:
+            self.trend_suggestions_text.insert(tk.END, "No trend-based suggestions available.")
+        else:
+            for i, tag_info in enumerate(trend_tags, 1):
+                self.trend_suggestions_text.insert(tk.END, 
+                    f"{i}. {tag_info['tag']} - {tag_info['reason']}\n\n")
     
     def display_metrics(self, metrics):
         """Display performance metrics"""
