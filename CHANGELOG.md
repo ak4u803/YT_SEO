@@ -5,6 +5,45 @@ All notable changes to YouTube SEO Analyzer will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-10-28
+
+### Added
+- **Machine Learning-Based Tag Prediction** 🤖
+  - Integrated local ML models for intelligent tag prediction (no API keys required)
+  - Zero-shot classification using Facebook's BART model for content categorization
+  - Semantic similarity analysis using sentence transformers (all-MiniLM-L6-v2)
+  - Clustering-based tag discovery using K-means algorithm
+  - Context-aware phrase extraction for multi-word tags
+  - ML tag quality metrics (diversity score, quality score)
+  - Explanations for why each ML tag was predicted
+  - Separate UI section for ML-predicted tags with quality indicators
+  - Graceful fallback to traditional methods if ML libraries unavailable
+  
+- **New Dependencies**
+  - `transformers>=4.30.0` - Hugging Face transformers for pre-trained models
+  - `sentence-transformers>=2.2.0` - Sentence embeddings for semantic analysis
+  - `torch>=2.0.0` - PyTorch backend for ML models
+  
+- **UI Enhancements**
+  - Dedicated "ML-Predicted Tags" section in SEO Suggestions tab
+  - ML tag quality metrics display (quality score, diversity percentage)
+  - Top 5 ML tag explanations showing prediction reasoning
+  - Separate copy button for ML-predicted tags
+  - Visual distinction between ML and traditional tags
+  
+### Changed
+- SEO Engine now generates both traditional and ML-based tags
+- SEO Suggestions tab reorganized with ML tags at the top
+- Copy buttons now specify tag type (ML vs Traditional)
+- Tag display includes method used (ML vs Traditional)
+
+### Technical Details
+- All ML models run locally without requiring external API keys
+- Models are downloaded once on first run and cached locally
+- CPU-based inference for broad compatibility
+- Lightweight models chosen for performance and memory efficiency
+- Error handling ensures app works even if ML dependencies missing
+
 ## [1.0.0] - 2025-10-26
 
 ### Added

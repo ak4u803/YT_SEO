@@ -13,6 +13,12 @@ An advanced SEO analysis tool designed to scan and analyze YouTube videos, provi
 - **Engagement Metrics**: Analyzes view counts, likes, and engagement rates
 
 ### 🏷️ Intelligent Tag Suggestions
+- **🤖 ML-Based Tag Prediction**: Uses AI models to intelligently predict tags (NEW!)
+  - Zero-shot classification for content categorization
+  - Semantic similarity analysis for contextual tags
+  - Clustering-based tag discovery
+  - Quality metrics and tag explanations
+  - All models run locally - no API keys required
 - **TF-IDF Analysis**: Uses advanced natural language processing to identify key terms
 - **Keyword Extraction**: Identifies the most relevant keywords from video content
 - **Phrase Detection**: Suggests multi-word tags for better specificity
@@ -144,11 +150,13 @@ python main.py
 ### Tips for Best Results
 
 1. **Use Complete Information**: Videos with detailed descriptions and transcripts yield better suggestions
-2. **Regular Analysis**: Re-analyze videos periodically as trends change
-3. **Test Different Regions**: Try different regional settings if you have an international audience
-4. **Adjust Weights**: Customize metric weights based on your specific goals (e.g., prioritize trend alignment for viral content)
-5. **Monitor Trends**: Use shorter timeframes (1-7 days) for rapidly changing niches
-6. **Combine Tags**: Use a mix of suggested tags and trend-based tags for optimal results
+2. **Leverage ML Tags**: Combine ML-predicted tags with traditional tags for maximum discoverability
+3. **Regular Analysis**: Re-analyze videos periodically as trends change
+4. **Test Different Regions**: Try different regional settings if you have an international audience
+5. **Adjust Weights**: Customize metric weights based on your specific goals (e.g., prioritize trend alignment for viral content)
+6. **Monitor Trends**: Use shorter timeframes (1-7 days) for rapidly changing niches
+7. **Trust the AI**: ML-predicted tags often discover relevant categories you might not have considered
+8. **Combine Methods**: Use both ML and traditional tags for the best coverage
 
 ## Understanding the Metrics
 
@@ -246,6 +254,30 @@ nltk.download('stopwords')
 - **Metadata Access**: Some video metadata may be restricted or unavailable
 - **Trend Data**: Trend analysis requires active internet connection
 
+## Machine Learning Tag Prediction
+
+The tool now includes **ML-based tag prediction** using local AI models:
+
+### Features:
+- **Zero-Shot Classification**: Automatically categorizes content using Facebook's BART model
+- **Semantic Analysis**: Finds contextually relevant tags using sentence transformers
+- **Clustering**: Discovers hidden patterns and tag groups
+- **Quality Metrics**: Provides diversity and quality scores for generated tags
+- **Tag Explanations**: Shows why each tag was predicted
+
+### Requirements:
+```bash
+pip install transformers sentence-transformers torch
+```
+
+### Key Benefits:
+- ✅ **100% Free** - No API keys or subscriptions required
+- ✅ **Privacy-Friendly** - All processing happens locally on your computer
+- ✅ **No Rate Limits** - Unlimited analyses
+- ✅ **Offline Ready** - Works without internet (after initial model download)
+
+For detailed information, see [ML_TAG_PREDICTION.md](ML_TAG_PREDICTION.md)
+
 ## Future Enhancements
 
 Potential features for future versions:
@@ -256,6 +288,8 @@ Potential features for future versions:
 - Batch video analysis
 - Export reports to PDF/CSV
 - Video upload preview analysis
+- Multi-language ML support
+- Fine-tuned YouTube-specific models
 
 ## Enhanced Trend Prediction Algorithms
 
@@ -286,7 +320,9 @@ Contributions are welcome! Areas for improvement:
 - UI/UX improvements
 - Performance optimizations
 - Additional language support
-- Machine learning integrations
+- ~~Machine learning integrations~~ ✅ Added in v1.1.0!
+- Fine-tuning ML models for YouTube-specific content
+- Multi-language ML support
 
 ## License
 

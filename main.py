@@ -111,24 +111,36 @@ class YouTubeSEOAnalyzer:
         
     def setup_seo_tab(self):
         """Setup SEO suggestions tab"""
-        # Suggested tags
-        tags_frame = ttk.LabelFrame(self.seo_tab, text="Suggested Tags", padding="10")
-        tags_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=5, pady=5)
+        # ML-Predicted tags
+        ml_tags_frame = ttk.LabelFrame(self.seo_tab, text="🤖 ML-Predicted Tags (AI-Generated)", padding="10")
+        ml_tags_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=5, pady=5)
         
-        self.suggested_tags_text = scrolledtext.ScrolledText(tags_frame, width=80, height=10, 
+        self.ml_tags_text = scrolledtext.ScrolledText(ml_tags_frame, width=80, height=8, 
+                                                       font=('Arial', 10), wrap=tk.WORD)
+        self.ml_tags_text.grid(row=0, column=0, sticky=(tk.W, tk.E))
+        
+        # Copy ML tags button
+        copy_ml_btn = ttk.Button(ml_tags_frame, text="Copy ML Tags", command=self.copy_ml_tags)
+        copy_ml_btn.grid(row=1, column=0, pady=5)
+        
+        # Traditional Suggested tags
+        tags_frame = ttk.LabelFrame(self.seo_tab, text="Traditional Suggested Tags", padding="10")
+        tags_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), padx=5, pady=5)
+        
+        self.suggested_tags_text = scrolledtext.ScrolledText(tags_frame, width=80, height=8, 
                                                               font=('Arial', 10), wrap=tk.WORD)
         self.suggested_tags_text.grid(row=0, column=0, sticky=(tk.W, tk.E))
         
         # Copy tags button
-        copy_btn = ttk.Button(tags_frame, text="Copy Tags", command=self.copy_tags)
+        copy_btn = ttk.Button(tags_frame, text="Copy Traditional Tags", command=self.copy_tags)
         copy_btn.grid(row=1, column=0, pady=5)
         
         # Optimization suggestions
         opt_frame = ttk.LabelFrame(self.seo_tab, text="Optimization Suggestions", padding="10")
-        opt_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=5, pady=5)
-        self.seo_tab.rowconfigure(1, weight=1)
+        opt_frame.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=5, pady=5)
+        self.seo_tab.rowconfigure(2, weight=1)
         
-        self.optimization_text = scrolledtext.ScrolledText(opt_frame, width=80, height=15, 
+        self.optimization_text = scrolledtext.ScrolledText(opt_frame, width=80, height=10, 
                                                             font=('Arial', 10), wrap=tk.WORD)
         self.optimization_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         opt_frame.rowconfigure(0, weight=1)
@@ -337,7 +349,36 @@ Transcript Summary:
         
     def display_seo_results(self, seo_results):
         """Display SEO analysis results"""
-        # Suggested tags
+        # ML-Predicted tags
+        self.ml_tags_text.delete(1.0, tk.END)
+        ml_tags = seo_results.get('ml_tags', [])
+        
+        if ml_tags:
+            ml_tags_text = ', '.join(ml_tags[:self.num_tags_var.get()])
+            ml_method = seo_results.get('ml_method', 'ML')
+            
+            # Add quality metrics if available
+            quality_metrics = seo_results.get('ml_quality_metrics', {})
+            header = f"[{ml_method} Predictions]"
+            if quality_metrics:
+                quality_score = quality_metrics.get('quality_score', 0)
+                diversity = quality_metrics.get('diversity_score', 0)
+                header += f" | Quality: {quality_score:.0f}/100 | Diversity: {diversity:.0f}%\n\n"
+            else:
+                header += "\n\n"
+            
+            self.ml_tags_text.insert(1.0, header + ml_tags_text)
+            
+            # Add explanations for top tags if available
+            explanations = seo_results.get('ml_tag_explanations', {})
+            if explanations:
+                self.ml_tags_text.insert(tk.END, "\n\n━━━ Top ML Tag Explanations ━━━\n")
+                for tag, explanation in list(explanations.items())[:5]:
+                    self.ml_tags_text.insert(tk.END, f"\n• {tag}: {explanation}")
+        else:
+            self.ml_tags_text.insert(1.0, "ML tag prediction not available. Install transformers: pip install transformers sentence-transformers")
+        
+        # Traditional suggested tags
         self.suggested_tags_text.delete(1.0, tk.END)
         tags = seo_results.get('suggested_tags', [])
         tags_text = ', '.join(tags[:self.num_tags_var.get()])
@@ -512,9 +553,28 @@ Recommendations:
         if tags_text:
             self.root.clipboard_clear()
             self.root.clipboard_append(tags_text)
-            messagebox.showinfo("Success", "Tags copied to clipboard!")
+            messagebox.showinfo("Success", "Traditional tags copied to clipboard!")
         else:
             messagebox.showwarning("Warning", "No tags to copy")
+    
+    def copy_ml_tags(self):
+        """Copy ML-predicted tags to clipboard"""
+        tags_text = self.ml_tags_text.get(1.0, tk.END).strip()
+        # Extract just the tags (remove header and explanations)
+        lines = tags_text.split('\n')
+        # Find the line with tags (after header)
+        tag_line = ''
+        for line in lines:
+            if line and not line.startswith('[') and not line.startswith('━') and not line.startswith('•') and 'Quality:' not in line:
+                tag_line = line
+                break
+        
+        if tag_line:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(tag_line)
+            messagebox.showinfo("Success", "ML-predicted tags copied to clipboard!")
+        else:
+            messagebox.showwarning("Warning", "No ML tags to copy")
     
     def save_settings(self):
         """Save settings to file"""

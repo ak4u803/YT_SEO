@@ -11,17 +11,18 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import numpy as np
+from ml_tag_predictor import MLTagPredictor
 
 # Download required NLTK data
 try:
     nltk.data.find('tokenizers/punkt')
-except LookupError:
+except (LookupError, OSError):
     nltk.download('punkt', quiet=True)
 
 # Some newer NLTK versions separate punkt tables. Ensure it's present too.
 try:
     nltk.data.find('tokenizers/punkt_tab')
-except LookupError:
+except (LookupError, OSError):
     try:
         nltk.download('punkt_tab', quiet=True)
     except Exception:
@@ -29,7 +30,7 @@ except LookupError:
 
 try:
     nltk.data.find('corpora/stopwords')
-except LookupError:
+except (LookupError, OSError):
     nltk.download('stopwords', quiet=True)
 
 class SEOEngine:
@@ -43,10 +44,22 @@ class SEOEngine:
         }
         self.stop_words.update(self.youtube_stop_words)
         
+        # Initialize ML Tag Predictor
+        try:
+            self.ml_predictor = MLTagPredictor()
+            self.ml_enabled = True
+        except Exception as e:
+            print(f"ML Tag Predictor not available: {e}")
+            self.ml_predictor = None
+            self.ml_enabled = False
+        
     def analyze_seo(self, video_data):
         """Main SEO analysis method"""
         results = {
             'suggested_tags': [],
+            'ml_tags': [],
+            'ml_tag_explanations': {},
+            'ml_quality_metrics': {},
             'suggestions': [],
             'title_score': 0,
             'title_feedback': '',
@@ -82,9 +95,32 @@ class SEOEngine:
         results['content_score'] = content_analysis['score']
         results['content_feedback'] = content_analysis['feedback']
         
-        # Generate suggested tags
+        # Generate suggested tags (traditional method)
         suggested_tags = self.generate_tags(video_data)
         results['suggested_tags'] = suggested_tags
+        
+        # Generate ML-based tags
+        if self.ml_enabled and self.ml_predictor:
+            try:
+                ml_results = self.ml_predictor.predict_tags(video_data, num_tags=30)
+                results['ml_tags'] = ml_results.get('ml_tags', [])
+                results['ml_category_scores'] = ml_results.get('category_scores', {})
+                results['ml_method'] = ml_results.get('method_used', 'N/A')
+                
+                # Get explanations for ML tags
+                if results['ml_tags']:
+                    results['ml_tag_explanations'] = self.ml_predictor.get_tag_explanations(
+                        results['ml_tags'][:10], 
+                        video_data
+                    )
+                    
+                    # Analyze tag quality
+                    results['ml_quality_metrics'] = self.ml_predictor.analyze_tag_quality(
+                        results['ml_tags']
+                    )
+            except Exception as e:
+                print(f"Error in ML tag generation: {e}")
+                results['ml_tags'] = []
         
         # Generate recommendations
         results['recommendations'] = self.generate_recommendations(results)

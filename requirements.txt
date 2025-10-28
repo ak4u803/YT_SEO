@@ -9,6 +9,12 @@ youtube-transcript-api>=0.6.1
 nltk>=3.8.1
 scikit-learn>=1.3.0
 
+# Machine Learning (for ML-based tag prediction)
+# These run locally without requiring API keys
+transformers>=4.30.0
+sentence-transformers>=2.2.0
+torch>=2.0.0
+
 # Trend Analysis
 pytrends>=4.9.2
 

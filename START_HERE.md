@@ -17,19 +17,33 @@ Welcome to your **Advanced YouTube SEO Analyzer**! This guide will get you start
 ### 💻 Manual Mode
 
 ```bash
-# Install dependencies
+# Install dependencies (includes ML features)
 pip install -r requirements.txt
 
 # Run application
 python main.py
 ```
 
+### 🤖 ML Features (NEW!)
+
+**Optional**: Install ML-based tag prediction for AI-powered suggestions:
+```bash
+pip install transformers sentence-transformers torch
+```
+
+Or test if ML features are installed:
+```bash
+python test_ml_installation.py
+```
+
+**Learn more**: See [ML_TAG_PREDICTION.md](ML_TAG_PREDICTION.md) and [INSTALL_ML_FEATURES.md](INSTALL_ML_FEATURES.md)
+
 ## 🎯 What You Can Do
 
 ### 1️⃣ Analyze Any YouTube Video
 - Paste any YouTube URL
 - Get instant SEO analysis
-- Receive 30+ tag suggestions
+- Receive 30+ tag suggestions (traditional + AI-powered!)
 - See your overall SEO score (0-100)
 
 ### 2️⃣ Discover Trending Topics
@@ -56,6 +70,8 @@ python main.py
 |------|--------------|--------------|
 | **QUICKSTART.md** | 5-minute tutorial | Read FIRST |
 | **README.md** | Full documentation | Reference guide |
+| **ML_TAG_PREDICTION.md** | ML features guide | NEW! For AI tags |
+| **INSTALL_ML_FEATURES.md** | ML installation | NEW! For AI setup |
 | **INSTALLATION_TEST.md** | Troubleshooting | If you have issues |
 | **example_usage.py** | Code examples | For developers |
 | **PROJECT_STRUCTURE.md** | Architecture | For contributors |
@@ -68,6 +84,7 @@ python main.py
 - `youtube_analyzer.py` - Video data extraction
 - `seo_engine.py` - Tag generation & SEO analysis
 - `trend_analyzer.py` - Google Trends integration
+- `ml_tag_predictor.py` - AI-powered tag prediction (NEW!)
 
 ### 📦 Easy Setup
 - `setup.bat` / `setup.sh` - Automated installation
@@ -169,7 +186,8 @@ python main.py
 | Feature | Description | Benefit |
 |---------|-------------|---------|
 | **Video Analysis** | Extract all metadata | Understand current optimization |
-| **Smart Tags** | AI-powered suggestions | Get 30+ relevant tags instantly |
+| **Smart Tags** | Traditional + AI suggestions | Get 30+ relevant tags instantly |
+| **ML Predictions** 🤖 | Zero-shot AI categorization | Discover unexpected relevant tags |
 | **Trend Integration** | Real-time Google Trends | Stay current with your niche |
 | **SEO Scoring** | 0-100 overall score | Know exactly where you stand |
 | **5 Metrics** | Detailed breakdowns | Improve specific areas |
@@ -193,11 +211,13 @@ python main.py
 - ✓ Trend alignment (current topics, momentum)
 
 ### Generated for You
-- ✓ 30-50 suggested tags (customizable)
+- ✓ 30-50 traditional tags (customizable)
+- ✓ 30 AI-predicted tags with explanations (NEW!)
 - ✓ Specific optimization recommendations
 - ✓ Trend-based tag suggestions
 - ✓ Individual metric scores (0-100)
 - ✓ Overall SEO score (0-100)
+- ✓ ML tag quality metrics (NEW!)
 
 ## 🎬 Next Steps
 
@@ -220,10 +240,11 @@ python main.py
 
 ## 📝 Project Info
 
-**Version**: 1.0.0  
+**Version**: 1.1.0 (with ML Features!)  
 **License**: MIT (free to use, modify, distribute)  
 **Python**: 3.9+ required  
 **Platform**: Windows, Mac, Linux  
+**ML Models**: Facebook BART, Sentence Transformers (free, local, no API keys!)  
 
 **Made for content creators who want to optimize their YouTube presence** 🎥✨
 
