@@ -17,11 +17,11 @@ Version 1.1.0 introduces sophisticated trend analysis algorithms that provide mu
 
 ### New Dependency Required
 
-**Important**: This version adds SciPy as a dependency for statistical analysis.
+**Important**: This version adds SciPy as a dependency for statistical analysis and requires Python 3.9+.
 
 #### To Upgrade:
 ```bash
-pip install --upgrade scipy>=1.11.0
+pip install --upgrade "scipy>=1.11.0"
 ```
 
 Or install all updated dependencies:

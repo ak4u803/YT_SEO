@@ -10,12 +10,25 @@ echo ""
 echo "Checking Python installation..."
 if ! command -v python3 &> /dev/null; then
     echo "[ERROR] Python 3 is not installed"
-    echo "Please install Python 3.8 or higher"
+    echo "Please install Python 3.9 or higher"
     exit 1
 fi
 
 python3 --version
 echo ""
+
+# Verify Python version >= 3.9
+echo "Verifying Python version (>= 3.9)..."
+python3 - <<'EOF'
+import sys
+major, minor = sys.version_info[:2]
+print(f"Detected Python {major}.{minor}")
+sys.exit(0 if (major > 3 or (major == 3 and minor >= 9)) else 1)
+EOF
+if [ $? -ne 0 ]; then
+    echo "[ERROR] Python 3.9+ is required (SciPy >=1.11 dependency)."
+    exit 1
+fi
 
 # Upgrade pip
 echo "Upgrading pip..."

@@ -41,6 +41,13 @@ class TrendAnalyzer:
                 results['trend_feedback'] = 'Could not extract keywords for trend analysis'
                 return results
             
+            # Simple cache key to reduce repeated API calls
+            cache_key = (tuple(keywords[:5]), region or '', timeframe)
+            cached = self.trend_cache.get(cache_key)
+            now_ts = time.time()
+            if cached and (now_ts - cached['ts'] < self.cache_duration):
+                return cached['results']
+
             # Analyze trends for keywords
             trending_topics = self.get_trending_topics(keywords, region, timeframe)
             results['trending_topics'] = trending_topics
@@ -59,6 +66,12 @@ class TrendAnalyzer:
             results['trend_feedback'] = f'Trend analysis unavailable: {str(e)}'
             results['trend_score'] = 50  # Neutral score
         
+        # Store in cache
+        try:
+            self.trend_cache[cache_key] = {'ts': now_ts, 'results': results}
+        except Exception:
+            pass
+
         return results
     
     def extract_video_keywords(self, video_data):

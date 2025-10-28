@@ -222,7 +222,7 @@ python main.py
 
 **Version**: 1.0.0  
 **License**: MIT (free to use, modify, distribute)  
-**Python**: 3.8+ required  
+**Python**: 3.9+ required  
 **Platform**: Windows, Mac, Linux  
 
 **Made for content creators who want to optimize their YouTube presence** 🎥✨

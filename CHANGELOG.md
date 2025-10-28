@@ -160,7 +160,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Technical Improvements
 
 #### New Dependencies
-- **SciPy**: Added for advanced statistical analysis (≥1.11.0)
+- **SciPy**: Added for advanced statistical analysis (≥1.11.0, Python 3.9+)
   - Linear regression for lifecycle detection
   - Correlation analysis for cross-trend relationships
   - Statistical functions for comprehensive analysis

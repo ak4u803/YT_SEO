@@ -2,7 +2,7 @@
 
 An advanced SEO analysis tool designed to scan and analyze YouTube videos, providing comprehensive tag suggestions and optimization recommendations based on current trends and customizable performance metrics.
 
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Features
@@ -59,7 +59,7 @@ An advanced SEO analysis tool designed to scan and analyze YouTube videos, provi
 ## Installation
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.9 or higher
 - pip (Python package installer)
 
 ### Setup
