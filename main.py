@@ -28,6 +28,13 @@ class YouTubeSEOAnalyzer:
         
         self.setup_ui()
         
+    def _format_int(self, value):
+        """Return a human-readable integer with thousands separator, or 'N/A'."""
+        try:
+            return f"{int(value):,}"
+        except Exception:
+            return "N/A"
+
     def setup_ui(self):
         """Setup the user interface"""
         # Main container
@@ -217,8 +224,12 @@ class YouTubeSEOAnalyzer:
         
         ttk.Label(trend_frame, text="Trend region:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
         self.region_var = tk.StringVar(value="US")
-        region_combo = ttk.Combobox(trend_frame, textvariable=self.region_var, 
-                                     values=["US", "GB", "CA", "AU", "IN", "WORLD"], width=15)
+        region_combo = ttk.Combobox(
+            trend_frame,
+            textvariable=self.region_var,
+            values=["US", "GB", "CA", "AU", "IN", "WORLD"],
+            width=15
+        )
         region_combo.grid(row=0, column=1, padx=5, pady=5)
         
         ttk.Label(trend_frame, text="Timeframe:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
@@ -265,9 +276,12 @@ class YouTubeSEOAnalyzer:
             
             # Analyze trends
             self.update_status("Analyzing trends...")
+            # Map WORLD -> '' for pytrends worldwide
+            selected_region = self.region_var.get()
+            region_for_pytrends = '' if selected_region == 'WORLD' else selected_region
             trend_results = self.trend_analyzer.analyze_trends(
-                video_data, 
-                region=self.region_var.get(),
+                video_data,
+                region=region_for_pytrends,
                 timeframe=self.timeframe_var.get()
             )
             self.root.after(0, self.display_trend_results, trend_results)
@@ -293,15 +307,18 @@ class YouTubeSEOAnalyzer:
         """Display video information"""
         self.video_info_text.delete(1.0, tk.END)
         
+        views_str = self._format_int(video_data.get('views'))
+        likes_str = self._format_int(video_data.get('likes'))
+
         info = f"""Title: {video_data.get('title', 'N/A')}
 
 Video ID: {video_data.get('video_id', 'N/A')}
 
 Channel: {video_data.get('channel', 'N/A')}
 
-Views: {video_data.get('views', 'N/A'):,}
+Views: {views_str}
 
-Likes: {video_data.get('likes', 'N/A'):,}
+Likes: {likes_str}
 
 Upload Date: {video_data.get('upload_date', 'N/A')}
 
@@ -362,7 +379,7 @@ Transcript Summary:
                 
                 # Add viral indicator
                 if topic.get('viral_indicator'):
-                    display_text += f"   ⚡ {topic.get('viral_indicator')}\n"
+                    display_text += f"   {topic.get('viral_indicator')}\n"
                 
                 # Add forecast if available
                 forecasts = topic.get('forecast', [])

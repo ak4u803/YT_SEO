@@ -18,6 +18,15 @@ try:
 except LookupError:
     nltk.download('punkt', quiet=True)
 
+# Some newer NLTK versions separate punkt tables. Ensure it's present too.
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    try:
+        nltk.download('punkt_tab', quiet=True)
+    except Exception:
+        pass
+
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:

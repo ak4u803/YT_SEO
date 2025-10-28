@@ -5,7 +5,7 @@ Get up and running with YouTube SEO Analyzer in 5 minutes!
 ## Installation
 
 ### Step 1: Install Python
-Make sure you have Python 3.8 or higher installed:
+Make sure you have Python 3.9 or higher installed:
 ```bash
 python --version
 ```
@@ -127,7 +127,7 @@ Navigate through the tabs:
 pip install --upgrade -r requirements.txt
 
 # Check Python version
-python --version  # Should be 3.8+
+python --version  # Should be 3.9+
 ```
 
 ## Understanding Your Scores

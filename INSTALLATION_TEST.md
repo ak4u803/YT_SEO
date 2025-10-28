@@ -40,7 +40,7 @@ python --version
 python3 --version
 ```
 
-**Expected output**: `Python 3.8.x` or higher
+**Expected output**: `Python 3.9.x` or higher
 
 **If not installed**: Download from [python.org](https://www.python.org/downloads/)
 
